@@ -1,11 +1,11 @@
 [package]
 name = "primitive_traits"
-version = "0.1.0"
+version = "0.2.0"
 description = "Traits over primitive types. Particularly stuff not covered by num-*."
 keywords = ["primitive", "builtin", "integer", "numeric", "trait"]
 categories = ["algorithms", "compression", "data-structures"]
-homepage = "https://github.com/irrustible/prim_traits"
-repository = "https://github.com/irrustible/prim_traits"
+homepage = "https://github.com/irrustible/primitive_traits"
+repository = "https://github.com/irrustible/primitive_traits"
 authors = ["James Laver <james.laver@gmail.com>"]
 license = "MPL-2.0"
 edition = "2018"

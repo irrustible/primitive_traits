@@ -15,16 +15,23 @@ pub trait Float
 }
 
 pub trait Integer
-    : Copy + Default + Eq + Hash + Ord + Not + Sized
-    + Add<Self> + AddAssign<Self> + Div<Self> + DivAssign<Self>
-    + Mul<Self> + MulAssign<Self> + Sub<Self> + SubAssign<Self>
-    + Rem<Self> + RemAssign<Self> 
-    + BitAnd<Self> + BitAndAssign<Self> + BitOr<Self> + BitOrAssign<Self>
-    + BitXor<Self> + BitXorAssign<Self>
-    + Shl<Self> + ShlAssign<Self> + Shr<Self> + ShrAssign<Self>
+    : Copy + Default + Eq + Hash + Ord + Sized
+    + Not<Output=Self>
+    + Add<Self, Output=Self> + AddAssign<Self>
+    + Div<Self, Output=Self> + DivAssign<Self>
+    + Mul<Self, Output=Self> + MulAssign<Self>
+    + Sub<Self, Output=Self> + SubAssign<Self>
+    + Rem<Self, Output=Self> + RemAssign<Self>
+    + BitAnd<Self, Output=Self> + BitAndAssign<Self>
+    + BitOr<Self, Output=Self> + BitOrAssign<Self>
+    + BitXor<Self, Output=Self> + BitXorAssign<Self>
+    + Shl<Self, Output=Self> + ShlAssign<Self>
+    + Shr<Self, Output=Self> + ShrAssign<Self>
 {
     const MIN: Self;
     const MAX: Self;
+    const ZERO: Self;
+    const ONE: Self;
     const WIDTH: usize;
 }
 
@@ -33,11 +40,13 @@ pub trait Signed : Neg {}
 pub trait Unsigned {}
 
 pub trait AddSign : Integer + Unsigned {
-    type Signed : Integer + Signed;
+    type Signed : DropSign<Unsigned=Self>;
+    fn add_sign(self) -> <Self as AddSign>::Signed;
 }
 
 pub trait DropSign : Integer + Signed {
-    type Unsigned : Integer + Unsigned;
+    type Unsigned : AddSign<Signed=Self>;
+    fn drop_sign(self) -> <Self as DropSign>::Unsigned;
 }
 
 pub trait ArithmeticShr : Integer + Signed {}
@@ -78,6 +87,8 @@ macro_rules! impl_integer {
         impl Integer for $type {
             const MAX: $type = <$type>::MAX;
             const MIN: $type = <$type>::MIN;
+            const ZERO: $type = 0;
+            const ONE: $type = 1;
             const WIDTH: usize = $size;
         }
     }
@@ -87,6 +98,9 @@ macro_rules! impl_add_sign {
     ($type:ty = $signed:ty) => {
         impl AddSign for $type {
             type Signed = $signed;
+            fn add_sign(self) -> $signed {
+                self as $signed
+            }
         }
     }
 }
@@ -94,6 +108,9 @@ macro_rules! impl_drop_sign {
     ($type:ty = $unsigned:ty) => {
         impl DropSign for $type {
             type Unsigned = $unsigned;
+            fn drop_sign(self) -> $unsigned {
+                self as $unsigned
+            }
         }
     }
 }
