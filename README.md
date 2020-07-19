@@ -1,5 +1,9 @@
 # primitive_traits
 
+[![License](https://img.shields.io/crates/l/primitive_traits.svg)](https://github.com/irrustible/primitive_traits/blob/main/LICENSE)
+[![Package](https://img.shields.io/crates/v/primitive_traits.svg)](https://crates.io/crates/primitive_traits)
+[![Documentation](https://docs.rs/primitive_traits/badge.svg)](https://docs.rs/primitive_traits)
+
 Traits over primitive numeric types.
 
 ## Copyright and License

@@ -6,6 +6,7 @@ keywords = ["primitive", "builtin", "integer", "numeric", "trait"]
 categories = ["algorithms", "compression", "data-structures"]
 homepage = "https://github.com/irrustible/primitive_traits"
 repository = "https://github.com/irrustible/primitive_traits"
+documentation = "https://docs.rs/primitive_traits"
 authors = ["James Laver <james.laver@gmail.com>"]
 license = "MPL-2.0"
 edition = "2018"
